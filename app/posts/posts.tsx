@@ -7,5 +7,7 @@ import {getPosts} from "@/queries/post-queries";
 export default function Posts() {
   const {data} = useQuery({queryKey: ["posts"], queryFn: getPosts});
 
+  console.log(data);
+
   return <div>hello </div>;
 }
