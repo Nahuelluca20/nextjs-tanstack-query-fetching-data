@@ -4,8 +4,7 @@ import {useQuery} from "@tanstack/react-query";
 
 import {getPosts} from "@/queries/post-queries";
 import {PostType} from "@/types/types";
-
-import Post from "../../components/post";
+import PostCard from "@/components/cards/post-card";
 
 export default function Posts() {
   const {data} = useQuery({queryKey: ["posts"], queryFn: getPosts});
@@ -13,9 +12,8 @@ export default function Posts() {
   console.log(data);
 
   return (
-    <div>
-      hello
-      {data?.map((post: PostType) => <Post {...post} key={post.id} />)}
+    <div className="space-y-4 px-10 md:px-20 xl:px-40 my-20">
+      {data?.map((post: PostType) => <PostCard {...post} key={post.id} />)}
     </div>
   );
 }
