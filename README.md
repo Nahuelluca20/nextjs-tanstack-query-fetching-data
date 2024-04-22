@@ -3,7 +3,7 @@
 In this project we look at the best way to use TansStack Query + NextJS.
 We walk through the different APIs and hydration issues.
 
-## Pre-Fetch
+## PrefetchQuery
 We use `prefetchQuery` to avoid Request WaterFalls. Read more about [Request WaterFalls in TanStack Query](https://tanstack.com/query/latest/docs/framework/react/guides/request-waterfalls)
 
 ## Resources
