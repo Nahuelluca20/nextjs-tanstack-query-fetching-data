@@ -14,8 +14,6 @@ export default function PostClient() {
         .then((data) => data.posts),
   });
 
-  console.log(data);
-
   return (
     <div className="space-y-4 px-10 md:px-20 xl:px-40 my-20">
       <h1 className="text-2xl font-bold">Post Client Side</h1>

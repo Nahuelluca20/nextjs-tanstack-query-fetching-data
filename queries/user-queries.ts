@@ -1,7 +1,9 @@
 export async function getUserNameById(id: number) {
-  const userName = await fetch(`https://dummyjson.com/users/${id}?select=username`)
+  const userName: string = await fetch(`https://dummyjson.com/users/${id}?select=username`)
     .then((response) => response.json())
-    .then((data) => data.userName);
+    .then((data) => data.username);
+
+  console.log(userName);
 
   return userName;
 }

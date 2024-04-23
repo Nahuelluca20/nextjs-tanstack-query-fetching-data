@@ -1,18 +1,20 @@
-import {CalendarIcon, HeartIcon} from "@radix-ui/react-icons";
+"use client";
 
-import {
-  CardTitle,
-  CardDescription,
-  CardHeader,
-  CardContent,
-  CardFooter,
-  Card,
-} from "@/components/ui/card";
+import {CalendarIcon, HeartIcon} from "@radix-ui/react-icons";
+import {useQuery} from "@tanstack/react-query";
+
+import {CardTitle, CardHeader, CardContent, CardFooter, Card} from "@/components/ui/card";
 import {Button} from "@/components/ui/button";
 import {PostType} from "@/types/types";
 import {Badge} from "@/components/ui/badge";
+import {getUserNameById} from "@/queries/user-queries";
 
 export default function PostCard({tags, title, id, reactions, userId}: PostType) {
+  const {data: userName} = useQuery({
+    queryKey: ["username", id],
+    queryFn: () => getUserNameById(id),
+  });
+
   return (
     <Card>
       <CardHeader>
@@ -38,7 +40,7 @@ export default function PostCard({tags, title, id, reactions, userId}: PostType)
       <CardFooter>
         <div className="grid items-center gap-4 sm:flex sm:gap-8">
           <div className="flex items-center gap-4">
-            <div className="text-sm not-italic">Posted by Lee</div>
+            <div className="text-sm not-italic">Posted by {userName}</div>
           </div>
           <div className="flex items-center gap-4">
             <Button size="sm" variant="outline">
