@@ -5,7 +5,6 @@ import {useQuery} from "@tanstack/react-query";
 import {getPosts} from "@/queries/post-queries";
 import {PostType} from "@/types/types";
 import PostCardPrefetch from "@/components/cards/post-card-prefetch";
-import {getUserNameById} from "@/queries/user-queries";
 
 export default function Posts() {
   const {data} = useQuery({queryKey: ["prefetch-posts"], queryFn: getPosts});

@@ -17,6 +17,8 @@ export default function PostCard({tags, title, id, reactions, userId}: PostType)
         .then((data) => data.username),
   });
 
+  console.log(isPending);
+
   return (
     <Card>
       <CardHeader>
