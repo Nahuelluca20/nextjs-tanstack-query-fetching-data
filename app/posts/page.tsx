@@ -1,20 +1,22 @@
-import {dehydrate, HydrationBoundary, QueryClient} from "@tanstack/react-query";
-
 import {getPosts} from "@/queries/post-queries";
+import {PostType} from "@/types/types";
+import PostCard from "@/components/cards/post-card";
 
-import Posts from "./posts";
+import getQueryClient from "../getQueryClient";
 
 export default async function page() {
-  const queryClient = new QueryClient();
+  const queryClient = getQueryClient();
 
-  // await queryClient.prefetchQuery({
-  //   queryKey: ["posts"],
-  //   queryFn: getPosts,
-  // });
+  // Note we are now using fetchQuery()
+  const posts = await queryClient.fetchQuery({
+    queryKey: ["posts"],
+    queryFn: getPosts,
+  });
 
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <Posts />
-    </HydrationBoundary>
+    <div className="space-y-4 px-10 md:px-20 xl:px-40 my-20">
+      <h1 className="text-2xl font-bold">Post Server Side</h1>
+      {posts?.map((post: PostType) => <PostCard {...post} key={post.id} />)}
+    </div>
   );
 }
