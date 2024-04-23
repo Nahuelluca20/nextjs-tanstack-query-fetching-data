@@ -3,7 +3,5 @@ export async function getUserNameById(id: number) {
     .then((response) => response.json())
     .then((data) => data.username);
 
-  console.log(userName);
-
   return userName;
 }

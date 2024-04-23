@@ -7,14 +7,16 @@ import {CardTitle, CardHeader, CardContent, CardFooter, Card} from "@/components
 import {Button} from "@/components/ui/button";
 import {PostType} from "@/types/types";
 import {Badge} from "@/components/ui/badge";
+import {getUserNameById} from "@/queries/user-queries";
 
-export default function PostCard({tags, title, id, reactions, userId}: PostType) {
+export default function PostCardPrefetch({tags, title, id, reactions, userId}: PostType) {
   const {data: userName, isPending} = useQuery({
-    queryKey: ["username-without-prefetch", id],
-    queryFn: async () =>
-      await fetch(`https://dummyjson.com/users/${id}?select=username`)
-        .then((response) => response.json())
-        .then((data) => data.username),
+    queryKey: ["username-prefetch", id],
+    queryFn: async () => {
+      const username = await getUserNameById(id);
+
+      return username;
+    },
   });
 
   return (
