@@ -1,3 +1,4 @@
+"use server";
 import {PostsType} from "@/types/types";
 
 export async function getPosts() {
