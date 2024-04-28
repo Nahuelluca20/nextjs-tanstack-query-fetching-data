@@ -5,6 +5,8 @@
 // extracting this part out into it's own file with 'use client' on top
 import React, {useState} from "react";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
+import {PersistQueryClientProvider} from "@tanstack/react-query-persist-client";
+import {createSyncStoragePersister} from "@tanstack/query-sync-storage-persister";
 
 function makeQueryClient() {
   return new QueryClient({
@@ -12,6 +14,8 @@ function makeQueryClient() {
       queries: {
         // With SSR, we usually want to set some default staleTime
         // above 0 to avoid refetching immediately on the client
+
+        gcTime: 1000 * 60 * 60 * 24,
         staleTime: 60 * 1000,
       },
     },
@@ -41,6 +45,13 @@ export default function Providers({children}: {children: React.ReactNode}) {
   //       suspend because React will throw away the client on the initial
   //       render if it suspends and there is no boundary
   const queryClient = getQueryClient();
+  const persister = createSyncStoragePersister({
+    storage: window.localStorage,
+  });
 
-  return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
+  return (
+    <PersistQueryClientProvider client={queryClient} persistOptions={{persister}}>
+      {children}
+    </PersistQueryClientProvider>
+  );
 }
