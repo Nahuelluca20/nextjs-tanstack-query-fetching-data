@@ -38,6 +38,11 @@ function getQueryClient() {
     return browserQueryClient;
   }
 }
+function getLocalStorage() {
+  if (typeof window !== "undefined") {
+    return window.localStorage;
+  }
+}
 
 export default function Providers({children}: {children: React.ReactNode}) {
   // NOTE: Avoid useState when initializing the query client if you don't
@@ -45,8 +50,9 @@ export default function Providers({children}: {children: React.ReactNode}) {
   //       suspend because React will throw away the client on the initial
   //       render if it suspends and there is no boundary
   const queryClient = getQueryClient();
+
   const persister = createSyncStoragePersister({
-    storage: window.localStorage,
+    storage: getLocalStorage(),
   });
 
   return (
